@@ -23,6 +23,7 @@
 
 use Cake\Routing\Route\DashedRoute;
 use Cake\Routing\RouteBuilder;
+use Cake\Routing\Router;
 
 /*
  * This file is loaded in the context of the `Application` class.
@@ -97,4 +98,46 @@ return function (RouteBuilder $routes): void {
      * });
      * ```
      */
+    $routes->scope('/login', function ($routes) {
+        $routes->setExtensions(['json']);
+        $routes->post('/', ['controller' => 'Auth', 'action' => 'login']);
+    });
+    $routes->scope('/articles', function ($routes) {
+        $routes->setExtensions(['json']);
+        $routes->get('/', ['controller' => 'Articles', 'action' => 'index']);
+        $routes->get('/:id', ['controller' => 'Articles', 'action' => 'view'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+        $routes->post('/', ['controller' => 'Articles', 'action' => 'add']);
+        $routes->put('/:id', ['controller' => 'Articles', 'action' => 'edit'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+        $routes->delete('/:id', ['controller' => 'Articles', 'action' => 'delete'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+    });
+    $routes->scope('/users', function ($routes) {
+        $routes->setExtensions(['json']);
+        $routes->get('/', ['controller' => 'Users', 'action' => 'index']);
+        $routes->get('/:id', ['controller' => 'Users', 'action' => 'view'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+        $routes->post('/', ['controller' => 'Users', 'action' => 'add']);
+        $routes->put('/:id', ['controller' => 'Users', 'action' => 'edit'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+        $routes->delete('/:id', ['controller' => 'Users', 'action' => 'delete'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+    });
+    $routes->scope('/articleLikes', function ($routes) {
+        $routes->setExtensions(['json']);
+        $routes->get('/', ['controller' => 'ArticleLikes', 'action' => 'index']);
+        $routes->get('/:id', ['controller' => 'ArticleLikes', 'action' => 'view'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+        $routes->put('/:id', ['controller' => 'ArticleLikes', 'action' => 'add'])
+            ->setPass(['id'])
+            ->setPatterns(['id' => '\d+']);
+    });
 };
